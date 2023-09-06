@@ -13,14 +13,16 @@ function App() {
   return (
     <Router>
       <NavBar />
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/products" element={<ProductsPage />} />
-        <Route path="/products/:productId" element={<ProductDetailPage />} />
-        <Route path="/cart" element={<CartPage />} />
-        <Route path="/login" element={<UserLoginPage />} />
-        <Route path="/profile" element={<UserProfilePage />} />
-      </Routes>
+      <div style={{ padding: '20px' }}>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/products" element={<ProductsPage />} />
+          <Route path="/products/:productId" element={<ProductDetailPage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/login" element={<UserLoginPage />} />
+          <Route path="/profile" element={<UserProfilePage />} />
+        </Routes>
+      </div>
       <CategoryFilter />
     </Router>
   );
