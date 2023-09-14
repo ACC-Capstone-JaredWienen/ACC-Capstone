@@ -1,45 +1,85 @@
-// CheckoutForm.js
 import React, { useState } from 'react';
 
 const CheckoutForm = () => {
-    const [formData, setFormData] = useState({
-        name: '',
-        address: '',
-        paymentMethod: 'creditCard'
-    });
+  const [formData, setFormData] = useState({
+    fullName: '',
+    email: '',
+    cardNumber: '',
+    expiryDate: '',
+    cvv: '',
+    billingAddress: ''
+  });
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
-        // In a real-world scenario, you'd send this data to your backend.
-        console.log(formData);
-        alert('Order placed successfully!');
-    };
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData(prevData => ({ ...prevData, [name]: value }));
+  };
 
-    return (
-        <div>
-            <h2>Checkout</h2>
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Name:</label>
-                    <input type="text" value={formData.name} onChange={e => setFormData({ ...formData, name: e.target.value })} />
-                </div>
-                <div>
-                    <label>Address:</label>
-                    <textarea value={formData.address} onChange={e => setFormData({ ...formData, address: e.target.value })} />
-                </div>
-                <div>
-                    <label>Payment Method:</label>
-                    <select value={formData.paymentMethod} onChange={e => setFormData({ ...formData, paymentMethod: e.target.value })}>
-                        <option value="creditCard">Credit Card</option>
-                        <option value="paypal">PayPal</option>
-                    </select>
-                </div>
-                <div>
-                    <button type="submit">Place Order</button>
-                </div>
-            </form>
-        </div>
-    );
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log('Form data submitted:', formData);
+    // Here you can send the formData to the backend or process it further.
+    alert('Checkout complete!'); // Replace this with your desired action
+  };
+
+  return (
+    <div className="checkout-form">
+      <h2>Checkout</h2>
+      <form onSubmit={handleSubmit}>
+        <input 
+          type="text" 
+          name="fullName" 
+          placeholder="Full Name" 
+          value={formData.fullName}
+          onChange={handleChange}
+          required 
+        />
+        <input 
+          type="email" 
+          name="email" 
+          placeholder="Email" 
+          value={formData.email}
+          onChange={handleChange}
+          required 
+        />
+        <input 
+          type="text" 
+          name="cardNumber" 
+          placeholder="Card Number" 
+          maxLength="16"
+          value={formData.cardNumber}
+          onChange={handleChange}
+          required 
+        />
+        <input 
+          type="text" 
+          name="expiryDate" 
+          placeholder="Expiry MM/YY" 
+          maxLength="5"
+          value={formData.expiryDate}
+          onChange={handleChange}
+          required 
+        />
+        <input 
+          type="text" 
+          name="cvv" 
+          placeholder="CVV" 
+          maxLength="3"
+          value={formData.cvv}
+          onChange={handleChange}
+          required 
+        />
+        <textarea 
+          name="billingAddress" 
+          placeholder="Billing Address" 
+          value={formData.billingAddress}
+          onChange={handleChange}
+          required 
+        />
+        <button type="submit">Complete Purchase</button>
+      </form>
+    </div>
+  );
 };
 
 export default CheckoutForm;
