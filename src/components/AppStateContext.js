@@ -1,13 +1,14 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom'; // <-- updated this line
 
 const AppStateContext = createContext();
 
 export const AppStateProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const navigate = useNavigate(); // <-- updated this line
 
   useEffect(() => {
-    // Fetch the cart data for a given user when the app initializes
     fetch('https://fakestoreapi.com/carts/user/2')
       .then(res => res.json())
       .then(data => {
@@ -73,6 +74,7 @@ export const AppStateProvider = ({ children }) => {
 
   const logout = () => {
     setIsLoggedIn(false);
+    navigate('/'); // <-- updated this line
   };
 
   return (
