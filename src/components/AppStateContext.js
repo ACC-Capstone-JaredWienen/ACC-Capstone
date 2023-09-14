@@ -1,10 +1,10 @@
-// AppStateContext.js
 import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const AppStateContext = createContext();
 
 export const AppStateProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   useEffect(() => {
     // Fetch the cart data for a given user when the app initializes
@@ -19,7 +19,6 @@ export const AppStateProvider = ({ children }) => {
 
   const addToCart = (productId, quantity = 1) => {
     const existingProduct = cart.find(item => item.productId === productId);
-
     let updatedCart;
     if (existingProduct) {
       updatedCart = cart.map(item =>
@@ -30,7 +29,6 @@ export const AppStateProvider = ({ children }) => {
     } else {
       updatedCart = [...cart, { productId, quantity }];
     }
-
     updateBackendCart(updatedCart);
   };
 
@@ -41,18 +39,16 @@ export const AppStateProvider = ({ children }) => {
 
   const decreaseQuantity = (productId) => {
     const existingProduct = cart.find(item => item.productId === productId);
-
     let updatedCart;
     if (existingProduct && existingProduct.quantity > 1) {
-        updatedCart = cart.map(item =>
-            item.productId === productId
-                ? { ...item, quantity: item.quantity - 1 }
-                : item
-        );
+      updatedCart = cart.map(item =>
+        item.productId === productId
+          ? { ...item, quantity: item.quantity - 1 }
+          : item
+      );
     } else {
-        updatedCart = cart.filter(item => item.productId !== productId);
+      updatedCart = cart.filter(item => item.productId !== productId);
     }
-
     updateBackendCart(updatedCart);
   };
 
@@ -73,10 +69,14 @@ export const AppStateProvider = ({ children }) => {
           setCart(data.products);
         }
       });
-  }
+  };
+
+  const logout = () => {
+    setIsLoggedIn(false);
+  };
 
   return (
-    <AppStateContext.Provider value={{ cart, addToCart, removeFromCart, decreaseQuantity }}>
+    <AppStateContext.Provider value={{ cart, addToCart, removeFromCart, decreaseQuantity, isLoggedIn, setIsLoggedIn, logout }}>
       {children}
     </AppStateContext.Provider>
   );

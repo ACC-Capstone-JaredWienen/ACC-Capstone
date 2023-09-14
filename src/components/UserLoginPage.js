@@ -1,11 +1,14 @@
-// UserLoginPage.js
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; 
+import { useAppState } from './AppStateContext'; // Adjust the path accordingly
 
 const UserLoginPage = () => {
     const [credentials, setCredentials] = useState({
         username: '',
         password: ''
     });
+    const { setIsLoggedIn } = useAppState();
+    const navigate = useNavigate(); // using the useNavigate hook
 
     const handleChange = (e) => {
         setCredentials({
@@ -28,9 +31,9 @@ const UserLoginPage = () => {
             const data = await response.json();
 
             if (data.token) {
-                // Save the token to your app's state or local storage
-                console.log("Logged in successfully:", data);
-                // Navigate the user to the home or profile page
+                setIsLoggedIn(true);
+                alert('Log in successful!');
+                navigate('/profile'); // Navigate to profile page
             } else {
                 console.error("Login failed:", data);
             }
