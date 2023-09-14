@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation, Link } from 'react-router-dom';
+import { useLocation } from 'react-router-dom'; // Removed Link from imports
 import ProductCard from './ProductCard';
 
 const ProductsPage = () => {
@@ -42,9 +42,8 @@ const ProductsPage = () => {
       <h1>{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Products` : 'All Products'}</h1>
       <div>
         {products.map(product => (
-          <Link to={`/products/${product.id}`} key={product.id}>
-            <ProductCard product={product} />
-          </Link>
+          // Removed the Link wrapper
+          <ProductCard product={product} key={product.id} />
         ))}
       </div>
     </div>

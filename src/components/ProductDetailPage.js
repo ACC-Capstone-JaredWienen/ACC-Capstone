@@ -1,20 +1,21 @@
-// ProductDetailPage.js
 import React, { useState, useEffect } from 'react';
-import { useAppState } from './AppStateContext';
+import { useParams } from 'react-router-dom';
+import { useAppState } from './AppStateContext'; // Import the context to use the addToCart function
 
-const ProductDetailPage = (props) => {
+const ProductDetailPage = () => {
+  const { productId } = useParams();
   const [product, setProduct] = useState(null);
-  const { addToCart } = useAppState();
+  const { addToCart } = useAppState();  // Destructure the addToCart function from context
 
   useEffect(() => {
-    const productId = props.match.params.id;
-
     fetch(`https://fakestoreapi.com/products/${productId}`)
       .then(res => res.json())
       .then(data => setProduct(data));
-  }, [props.match.params.id]);
+  }, [productId]);
 
-  if (!product) return <div>Loading...</div>;
+  if (!product) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div>
@@ -22,7 +23,7 @@ const ProductDetailPage = (props) => {
       <img src={product.image} alt={product.title} />
       <p>{product.description}</p>
       <p>${product.price}</p>
-      <button onClick={() => addToCart(product.id)}>Add to Cart</button>
+      <button onClick={() => addToCart(product.id)}>Add to Cart</button> {/* Add to Cart button */}
     </div>
   );
 };
