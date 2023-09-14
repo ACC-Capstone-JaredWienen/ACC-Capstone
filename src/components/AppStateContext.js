@@ -8,12 +8,10 @@ export const AppStateProvider = ({ children }) => {
 
   useEffect(() => {
     // Fetch the cart data for a given user when the app initializes
-    // Here I'm assuming user ID is 2 for demo purposes. You'd fetch the appropriate user's cart.
     fetch('https://fakestoreapi.com/carts/user/2')
       .then(res => res.json())
       .then(data => {
         if (data && data.length) {
-          // Assuming we take the first cart for this user
           setCart(data[0].products);
         }
       });
@@ -24,19 +22,41 @@ export const AppStateProvider = ({ children }) => {
 
     let updatedCart;
     if (existingProduct) {
-      // Increase quantity if the product already exists in the cart
       updatedCart = cart.map(item =>
         item.productId === productId
           ? { ...item, quantity: item.quantity + quantity }
           : item
       );
     } else {
-      // Add the new product to the cart
       updatedCart = [...cart, { productId, quantity }];
     }
 
-    // Sync the cart with the backend
-    // Here I'm assuming cart ID is 5 for demo purposes. In a real scenario, you'd use the appropriate cart ID.
+    updateBackendCart(updatedCart);
+  };
+
+  const removeFromCart = (productId) => {
+    const updatedCart = cart.filter(item => item.productId !== productId);
+    updateBackendCart(updatedCart);
+  };
+
+  const decreaseQuantity = (productId) => {
+    const existingProduct = cart.find(item => item.productId === productId);
+
+    let updatedCart;
+    if (existingProduct && existingProduct.quantity > 1) {
+        updatedCart = cart.map(item =>
+            item.productId === productId
+                ? { ...item, quantity: item.quantity - 1 }
+                : item
+        );
+    } else {
+        updatedCart = cart.filter(item => item.productId !== productId);
+    }
+
+    updateBackendCart(updatedCart);
+  };
+
+  const updateBackendCart = (updatedCart) => {
     fetch('https://fakestoreapi.com/carts/5', {
       method: "PUT",
       headers: {
@@ -53,10 +73,10 @@ export const AppStateProvider = ({ children }) => {
           setCart(data.products);
         }
       });
-  };
+  }
 
   return (
-    <AppStateContext.Provider value={{ cart, addToCart }}>
+    <AppStateContext.Provider value={{ cart, addToCart, removeFromCart, decreaseQuantity }}>
       {children}
     </AppStateContext.Provider>
   );
