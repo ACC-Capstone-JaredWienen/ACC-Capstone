@@ -9,17 +9,39 @@ const CheckoutForm = () => {
     cvv: '',
     billingAddress: ''
   });
+  const [errors, setErrors] = useState({}); // For validation messages
 
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData(prevData => ({ ...prevData, [name]: value }));
   };
 
+  const validate = () => {
+    let validationErrors = {};
+
+    if (formData.cardNumber.length !== 16) {
+      validationErrors.cardNumber = 'Card number should be 16 digits';
+    }
+
+    if (!/^\d{2}\/\d{2}$/.test(formData.expiryDate)) {
+      validationErrors.expiryDate = 'Expiry should be in MM/YY format';
+    }
+
+    if (formData.cvv.length !== 3) {
+      validationErrors.cvv = 'CVV should be 3 digits';
+    }
+
+    setErrors(validationErrors);
+    return Object.keys(validationErrors).length === 0;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log('Form data submitted:', formData);
-    // Here you can send the formData to the backend or process it further.
-    alert('Checkout complete!'); // Replace this with your desired action
+
+    if (validate()) {
+      console.log('Form data submitted:', formData);
+      alert('Checkout complete!'); // Replace with your desired action
+    }
   };
 
   return (
@@ -51,6 +73,7 @@ const CheckoutForm = () => {
           onChange={handleChange}
           required 
         />
+        {errors.cardNumber && <p>{errors.cardNumber}</p>}
         <input 
           type="text" 
           name="expiryDate" 
@@ -60,6 +83,7 @@ const CheckoutForm = () => {
           onChange={handleChange}
           required 
         />
+        {errors.expiryDate && <p>{errors.expiryDate}</p>}
         <input 
           type="text" 
           name="cvv" 
@@ -69,6 +93,7 @@ const CheckoutForm = () => {
           onChange={handleChange}
           required 
         />
+        {errors.cvv && <p>{errors.cvv}</p>}
         <textarea 
           name="billingAddress" 
           placeholder="Billing Address" 
