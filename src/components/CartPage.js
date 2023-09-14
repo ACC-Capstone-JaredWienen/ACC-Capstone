@@ -1,31 +1,22 @@
-import React, { useState, useEffect } from 'react';
+// CartPage.js
+import React from 'react';
+import { useAppState } from './AppStateContext';
 
 const CartPage = () => {
-  // You would typically have a user ID from login/session, for now, I'm hardcoding as 1
-  const userId = 1;
-
-  const [cartItems, setCartItems] = useState([]);
-
-  useEffect(() => {
-    fetch(`https://fakestoreapi.com/carts?userId=${userId}`)
-      .then(res => res.json())
-      .then(data => {
-        if (data.length) setCartItems(data[0].products);
-      });
-  }, [userId]);
+  const { cart } = useAppState();
 
   return (
     <div>
-      <h1>Your Cart</h1>
+      <h2>Your Cart</h2>
       <ul>
-        {cartItems.map(item => (
+        {cart.map(item => (
           <li key={item.productId}>
-            Product ID: {item.productId} | Quantity: {item.quantity}
-            {/* Here you might want to fetch product details to show more information, like product name, image, etc. */}
+            Product ID: {item.productId}, Quantity: {item.quantity}
+            {/* Here, you might want to fetch additional product details like name, price, etc. */}
+            {/* You can also add buttons to increase/decrease quantity or remove from cart. */}
           </li>
         ))}
       </ul>
-      {/* You can also show Total Amount, Checkout button, etc. */}
     </div>
   );
 };

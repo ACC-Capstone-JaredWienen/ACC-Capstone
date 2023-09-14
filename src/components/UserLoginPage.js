@@ -1,48 +1,51 @@
+// UserLoginPage.js
 import React, { useState } from 'react';
 
 const UserLoginPage = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+    const [credentials, setCredentials] = useState({
+        username: '',
+        password: ''
+    });
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
+    const handleChange = (e) => {
+        setCredentials({
+            ...credentials,
+            [e.target.name]: e.target.value
+        });
+    }
 
-    fetch('https://fakestoreapi.com/auth/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        username: username,
-        password: password,
-      }),
-    })
-      .then(res => res.json())
-      .then(data => {
-        // Handle the login token. Save it for future authenticated requests.
-        console.log(data);
-      })
-      .catch(error => {
-        console.error("There was an error logging in:", error);
-      });
-  };
+    const handleLogin = async (e) => {
+        e.preventDefault();
 
-  return (
-    <div>
-      <h1>Login</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>Username:</label>
-          <input type="text" value={username} onChange={(e) => setUsername(e.target.value)} />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
-        </div>
-        <button type="submit">Login</button>
-      </form>
-    </div>
-  );
-};
+        try {
+            const response = await fetch('https://fakestoreapi.com/auth/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(credentials)
+            });
+            const data = await response.json();
+
+            if (data.token) {
+                // Save the token to your app's state or local storage
+                console.log("Logged in successfully:", data);
+                // Navigate the user to the home or profile page
+            } else {
+                console.error("Login failed:", data);
+            }
+        } catch (error) {
+            console.error("Error during login:", error);
+        }
+    }
+
+    return (
+        <form onSubmit={handleLogin}>
+            <input type="text" name="username" placeholder="Username" onChange={handleChange} />
+            <input type="password" name="password" placeholder="Password" onChange={handleChange} />
+            <button type="submit">Login</button>
+        </form>
+    );
+}
 
 export default UserLoginPage;

@@ -1,7 +1,10 @@
+// ProductDetailPage.js
 import React, { useState, useEffect } from 'react';
+import { useAppState } from './AppStateContext';
 
 const ProductDetailPage = (props) => {
   const [product, setProduct] = useState(null);
+  const { addToCart } = useAppState();
 
   useEffect(() => {
     const productId = props.match.params.id;
@@ -19,7 +22,7 @@ const ProductDetailPage = (props) => {
       <img src={product.image} alt={product.title} />
       <p>{product.description}</p>
       <p>${product.price}</p>
-      {/* Add to cart button and other controls can go here */}
+      <button onClick={() => addToCart(product.id)}>Add to Cart</button>
     </div>
   );
 };
