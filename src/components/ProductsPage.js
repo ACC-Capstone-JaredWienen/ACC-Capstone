@@ -1,18 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom'; 
 import ProductCard from './ProductCard';
 
 const ProductsPage = () => {
   const [products, setProducts] = useState([]);
-  const [sortOrder, setSortOrder] = useState(''); // State to track sort order
-  const location = useLocation();
-
-  function useQuery() {
-    return new URLSearchParams(location.search);
-  }
-
-  const query = useQuery();
-  let category = query.get('category');
+  const [sortOrder, setSortOrder] = useState('');
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+  const [category, setCategory] = useState("");
 
   const getCategoryForAPI = (categorySlug) => {
     switch (categorySlug) {
@@ -24,15 +18,25 @@ const ProductsPage = () => {
         return categorySlug;
     }
   };
-  category = getCategoryForAPI(category);
 
   useEffect(() => {
     fetch('https://fakestoreapi.com/products')
       .then(res => res.json())
       .then(data => {
-        let filteredData = category ? data.filter(product => product.category === category) : data;
+        let filteredData = data;
 
-        // Implement the sorting here
+        if (category) {
+          filteredData = filteredData.filter(product => product.category === getCategoryForAPI(category));
+        }
+
+        if (minPrice) {
+          filteredData = filteredData.filter(product => product.price >= minPrice);
+        }
+
+        if (maxPrice) {
+          filteredData = filteredData.filter(product => product.price <= maxPrice);
+        }
+
         if (sortOrder === 'low-to-high') {
           filteredData.sort((a, b) => a.price - b.price);
         } else if (sortOrder === 'high-to-low') {
@@ -41,12 +45,36 @@ const ProductsPage = () => {
 
         setProducts(filteredData);
       });
-  }, [category, sortOrder]);
+  }, [category, sortOrder, minPrice, maxPrice]);
 
   return (
     <div>
       <h1>{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Products` : 'All Products'}</h1>
-      
+
+      {/* Filtering UI */}
+      <div>
+        <label>
+          Category: 
+          <select value={category} onChange={(e) => setCategory(e.target.value)}>
+            <option value="">All</option>
+            <option value="electronics">Electronics</option>
+            <option value="jewelery">Jewelry</option>
+            <option value="mens-clothing">Men's Clothing</option>
+            <option value="womens-clothing">Women's Clothing</option>
+          </select>
+        </label>
+
+        <label>
+          Min Price:
+          <input type="number" value={minPrice} onChange={(e) => setMinPrice(e.target.value)} />
+        </label>
+
+        <label>
+          Max Price:
+          <input type="number" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
+        </label>
+      </div>
+
       {/* Dropdown menu for sorting */}
       <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
         <option value="">Sort by price...</option>

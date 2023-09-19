@@ -1,21 +1,41 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import '../style/index.css';  // Assuming your styles are in this path
 
 const HomePage = () => {
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('https://fakestoreapi.com/products')
+      .then(res => res.json())
+      .then(data => {
+        // Randomly select 6 products
+        const randomProducts = [];
+        while (randomProducts.length < 6) {
+          const randomIndex = Math.floor(Math.random() * data.length);
+          const product = data[randomIndex];
+          if (!randomProducts.includes(product)) {
+            randomProducts.push(product);
+          }
+        }
+        setProducts(randomProducts);
+      });
+  }, []);
+
   return (
-    <div style={{ padding: '20px', textAlign: 'center' }}>
+    <div className="home-container">
       <h1>Welcome to our Online Store!</h1>
-      <p>Browse Categories:</p>
-      <ul>
-        <li><Link to="/products">All Products</Link></li>
-        <li><Link to="/products?category=electronics">Electronics</Link></li>
-        <li><Link to="/products?category=jewelery">Jewelry</Link></li>
-        <li><Link to="/products?category=mens-clothing">Men's Clothing</Link></li>
-        <li><Link to="/products?category=womens-clothing">Women's Clothing</Link></li>
-        <li><Link to="/login">User Login</Link></li>
-        <li><Link to="/profile">User Profile</Link></li>
-      </ul>
-      {/* Add other introductory or promotional material here */}
+      <p>Featured Products:</p>
+      <div className="product-grid">
+        {products.map(product => (
+          <div className="product-card" key={product.id}>
+            <Link to={`/products/${product.id}`}>
+              <img src={product.image} alt={product.title} />
+              <p>{product.title}</p>
+            </Link>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

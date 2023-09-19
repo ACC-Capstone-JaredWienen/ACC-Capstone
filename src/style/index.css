@@ -1,6 +1,35 @@
-body {
-  margin: 0;
-  padding: 0;
-  height: 100vh;
-  width: 100vw;
+/* ... [Existing styles here] ... */
+
+.product-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);  /* 3 columns for the product grid */
+  gap: 20px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.product-card {
+  border: 2px solid #F7FE2E;  /* Yellow border */
+  padding: 10px;
+  background-color: #000000;  /* Black background for the product cards */
+  transition: background-color 0.3s ease;
+}
+
+.product-card:hover {
+  background-color: #585858;  /* Light gray on hover for the product cards */
+}
+
+.product-card img {
+  max-width: 100%;
+  border: 2px solid #58FAF4; /* Bright cyan border around the image */
+}
+
+.product-card p {
+  font-family: 'Press Start 2P', cursive;
+  margin-top: 10px;
+  color: #58FAF4; /* Bright cyan text for product titles */
+}
+
+.home-container p {
+  font-family: 'Press Start 2P', cursive;
 }
