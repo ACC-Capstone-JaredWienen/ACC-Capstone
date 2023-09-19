@@ -33,3 +33,49 @@
 .home-container p {
   font-family: 'Press Start 2P', cursive;
 }
+
+/* ... [Existing styles from before] ... */
+
+/* NavBar Styles */
+nav {
+    background-color: #000000; /* Black background for the navbar */
+}
+
+nav a, nav button {
+    font-family: 'Press Start 2P', cursive;
+    color: #58FAF4; /* Bright cyan text for links */
+    border: 2px solid transparent;
+    padding: 5px;
+    transition: background-color 0.3s ease;
+}
+
+nav a:hover, nav button:hover {
+    background-color: #585858; /* Light gray on hover for the links */
+    border: 2px solid #F7FE2E;  /* Yellow border on hover */
+}
+
+/* Login, Signup, Profile Pages */
+.form-container {
+    background-color: #000000; /* Black background for the form */
+    padding: 20px;
+    border: 2px solid #F7FE2E; /* Yellow border for the form */
+}
+
+input[type="text"], input[type="password"], textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-family: 'Press Start 2P', cursive;
+    background-color: #585858; /* Light gray background for inputs */
+    border: 2px solid #F7FE2E;  /* Yellow border for inputs */
+    color: #F7FE2E; /* Yellow text color */
+}
+
+button {
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #F7FE2E; /* Yellow background on hover */
+    color: #000000; /* Black text on hover */
+}

@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import ProductCard from './ProductCard';
 
 const ProductsPage = () => {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const categoryFromUrl = queryParams.get('category');
+
   const [products, setProducts] = useState([]);
   const [sortOrder, setSortOrder] = useState('');
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
-  const [category, setCategory] = useState("");
+  const [category, setCategory] = useState(categoryFromUrl || "");
+
+  useEffect(() => {
+    setCategory(categoryFromUrl || "");
+  }, [categoryFromUrl]);
 
   const getCategoryForAPI = (categorySlug) => {
     switch (categorySlug) {
@@ -51,7 +60,6 @@ const ProductsPage = () => {
     <div>
       <h1>{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Products` : 'All Products'}</h1>
 
-      {/* Filtering UI */}
       <div>
         <label>
           Category: 
@@ -75,7 +83,6 @@ const ProductsPage = () => {
         </label>
       </div>
 
-      {/* Dropdown menu for sorting */}
       <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
         <option value="">Sort by price...</option>
         <option value="low-to-high">Low to High</option>
