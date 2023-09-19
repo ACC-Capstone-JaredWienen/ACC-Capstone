@@ -34,8 +34,6 @@
   font-family: 'Press Start 2P', cursive;
 }
 
-/* ... [Existing styles from before] ... */
-
 /* NavBar Styles */
 nav {
     background-color: #000000; /* Black background for the navbar */
@@ -78,4 +76,39 @@ button {
 button:hover {
     background-color: #F7FE2E; /* Yellow background on hover */
     color: #000000; /* Black text on hover */
+}
+
+/* Additional Retro Video Game Aesthetic Styles */
+
+/* For dropdowns and input fields in ProductsPage */
+select, input[type="number"] {
+    background-color: #585858; /* Light gray background */
+    border: 2px solid #F7FE2E;  /* Yellow border */
+    color: #F7FE2E; /* Yellow text color */
+    padding: 5px 10px;
+    margin: 5px;
+    font-family: 'Press Start 2P', cursive;
+}
+
+/* Consistent header and title styles */
+h1, h2 {
+    text-align: center;
+    border-bottom: 3px solid #F7FE2E;
+    padding: 10px 0;
+    margin-bottom: 20px;
+}
+
+/* CartPage & UserProfilePage Specific Styles */
+.cart-item, .profile-info {
+    border: 2px solid #F7FE2E;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: #000000;
+    margin: 10px 0;
+}
+
+.cart-item img, .profile-img {
+    max-width: 100px;
+    border-radius: 5px;
+    border: 2px solid #58FAF4; /* Bright cyan border around the image */
 }
