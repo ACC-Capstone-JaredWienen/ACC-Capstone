@@ -1,12 +1,14 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom'; // <-- updated this line
+import { useNavigate, useLocation } from 'react-router-dom';
 
 const AppStateContext = createContext();
 
 export const AppStateProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const navigate = useNavigate(); // <-- updated this line
+  const [alert, setAlert] = useState(null);
+  const navigate = useNavigate();
+  const location = useLocation(); 
 
   useEffect(() => {
     fetch('https://fakestoreapi.com/carts/user/2')
@@ -31,6 +33,7 @@ export const AppStateProvider = ({ children }) => {
       updatedCart = [...cart, { productId, quantity }];
     }
     updateBackendCart(updatedCart);
+    if (location.pathname !== '/cart') setAlert('Item has been added to the cart!');
   };
 
   const removeFromCart = (productId) => {
@@ -74,11 +77,11 @@ export const AppStateProvider = ({ children }) => {
 
   const logout = () => {
     setIsLoggedIn(false);
-    navigate('/'); // <-- updated this line
+    navigate('/');
   };
 
   return (
-    <AppStateContext.Provider value={{ cart, addToCart, removeFromCart, decreaseQuantity, isLoggedIn, setIsLoggedIn, logout }}>
+    <AppStateContext.Provider value={{ cart, addToCart, removeFromCart, decreaseQuantity, isLoggedIn, setIsLoggedIn, logout, alert, setAlert }}>
       {children}
     </AppStateContext.Provider>
   );

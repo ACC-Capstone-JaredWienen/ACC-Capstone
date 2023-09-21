@@ -9,17 +9,25 @@ import CartPage from './CartPage';
 import UserLoginPage from './UserLoginPage';
 import UserProfilePage from './UserProfilePage';
 import CheckoutForm from './CheckoutForm';
-import { AppStateProvider } from './AppStateContext';
+import { AppStateProvider, useAppState } from './AppStateContext';
+
+function AlertPopup() {
+  const { alert, setAlert } = useAppState();
+  useEffect(() => {
+    if (alert) {
+      const timer = setTimeout(() => setAlert(null), 3000); // Adjust the timeout to your preference
+      return () => clearTimeout(timer);
+    }
+  }, [alert, setAlert]);
+  return alert ? <div style={{ position: 'fixed', top: 0, right: 0, background: 'red', color: 'white', padding: '10px' }}>{alert}</div> : null;
+}
 
 function App() {
-
   useEffect(() => {
     netlifyIdentity.init({});
-
     netlifyIdentity.on('signup', user => {
       alert('Registration successful!');
     });
-
   }, []);
 
   const handleLogin = () => netlifyIdentity.open('login');
@@ -39,6 +47,7 @@ function App() {
           <Route path="/login" element={<UserLoginPage />} />
           <Route path="/profile" element={<UserProfilePage />} />
         </Routes>
+        <AlertPopup /> {/* This will display the alert popup */}
       </AppStateProvider>
     </Router>
   );
