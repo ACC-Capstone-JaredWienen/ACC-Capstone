@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAppState } from './AppStateContext';
 
-const NavBar = () => {
-  const { isLoggedIn, logout } = useAppState();
+const NavBar = ({ handleLogin, handleSignup, handleLogout }) => {
+  const { isLoggedIn } = useAppState();
 
   return (
     <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', background: '#f4f4f4' }}>
@@ -16,18 +16,18 @@ const NavBar = () => {
         <Link to="/products?category=womens-clothing">Women's Clothing</Link>
         <Link to="/cart">Cart</Link>
       </div>
-      
+
       <div style={{ display: 'flex', gap: '10px' }}>
         {!isLoggedIn && (
           <>
-            <Link to="/login">Login</Link>
-            <Link to="/signup">Sign Up</Link>
+            <button onClick={handleLogin}>Login</button>
+            <button onClick={handleSignup}>Sign Up</button>
           </>
         )}
         {isLoggedIn && (
           <>
             <Link to="/profile">Profile</Link>
-            <button onClick={logout}>Logout</button>
+            <button onClick={handleLogout}>Logout</button>
           </>
         )}
       </div>
