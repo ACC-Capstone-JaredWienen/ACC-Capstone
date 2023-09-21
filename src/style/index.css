@@ -2,71 +2,72 @@
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);  /* 4 columns for a tighter grid */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   justify-content: center;
   margin-top: 20px;
 }
 
 .product-card {
-  border: 2px solid #F7FE2E;  /* Yellow border */
+  border: 2px solid #F7FE2E;
   padding: 10px;
-  background-color: #000000;  /* Black background for the product cards */
+  background-color: #000000;
   transition: background-color 0.3s ease;
-  display: flex; /* To structure content vertically */
+  display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .product-card:hover {
-  background-color: #585858;  /* Light gray on hover for the product cards */
+  background-color: #585858;
 }
 
 .product-card img {
-  max-width: 70%; /* Smaller images for product cards */
-  border: 2px solid #58FAF4; /* Bright cyan border around the image */
+  max-width: 70%;
+  border: 2px solid #58FAF4;
 }
 
 .product-card p {
   font-family: 'Press Start 2P', cursive;
   margin-top: 10px;
-  color: #58FAF4; /* Bright cyan text for product titles */
-  width: 90%; /* Constrain width to 90% to allow for padding and border */
+  color: #58FAF4;
+  width: 90%;
 }
 
 /* NavBar Styles */
 nav {
-    background-color: #000000; /* Black background for the navbar */
+    background-color: #000000;
 }
 
 nav a, nav button {
     font-family: 'Press Start 2P', cursive;
-    color: #58FAF4; /* Bright cyan text for links */
+    color: #58FAF4;
     border: 2px solid transparent;
     padding: 5px;
     transition: background-color 0.3s ease;
 }
 
 nav a:hover, nav button:hover {
-    background-color: #585858; /* Light gray on hover for the links */
-    border: 2px solid #F7FE2E;  /* Yellow border on hover */
+    background-color: #585858;
+    border: 2px solid #F7FE2E;
 }
 
 /* Login, Signup, Profile Pages */
 .form-container {
-    background-color: #000000; /* Black background for the form */
+    background-color: #000000;
     padding: 20px;
-    border: 2px solid #F7FE2E; /* Yellow border for the form */
+    border: 2px solid #F7FE2E;
 }
 
-input[type="text"], input[type="password"], textarea, button {
+/* Updated input selector to include email input */
+input[type="text"], input[type="password"], input[type="email"], textarea, button {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     font-family: 'Press Start 2P', cursive;
-    background-color: #585858; /* Light gray background for inputs */
-    border: 2px solid #F7FE2E;  /* Yellow border for inputs */
-    color: #F7FE2E; /* Yellow text color */
+    background-color: #585858;
+    border: 2px solid #F7FE2E;
+    color: #F7FE2E;
 }
 
 button {
@@ -74,8 +75,8 @@ button {
 }
 
 button:hover {
-    background-color: #F7FE2E; /* Yellow background on hover */
-    color: #000000; /* Black text on hover */
+    background-color: #F7FE2E;
+    color: #000000;
 }
 
 /* ... [Any other existing styles] ... */
