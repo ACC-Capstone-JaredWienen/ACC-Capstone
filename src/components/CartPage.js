@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';  // Import useNavigate hook instead of useHistory
+import { useNavigate } from 'react-router-dom';
 import { useAppState } from './AppStateContext';
 
 const CartPage = () => {
   const { cart, addToCart, removeFromCart, decreaseQuantity } = useAppState();
   const [productsDetails, setProductsDetails] = useState([]);
-  const navigate = useNavigate();  // Instantiate the useNavigate hook
+  const navigate = useNavigate();
 
   useEffect(() => {
     Promise.all(cart.map(item => fetch(`https://fakestoreapi.com/products/${item.productId}`)
@@ -14,7 +14,8 @@ const CartPage = () => {
   }, [cart]);
 
   const handleCheckout = () => {
-    navigate('/checkout');  // Redirects user to the '/checkout' route using the new navigate function
+    // Updated to navigate to CheckoutPage instead of InvoicePage
+    navigate('/checkout'); // Redirect to the CheckoutPage when Checkout button is clicked
   };
 
   return (
@@ -33,7 +34,6 @@ const CartPage = () => {
           );
         })}
       </ul>
-      {/* Add a Checkout button */}
       {cart.length > 0 && <button onClick={handleCheckout}>Checkout</button>}
     </div>
   );

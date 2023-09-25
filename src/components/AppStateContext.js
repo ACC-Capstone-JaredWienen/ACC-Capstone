@@ -7,8 +7,9 @@ export const AppStateProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [alert, setAlert] = useState(null);
+  const [checkoutInfo, setCheckoutInfo] = useState(null); // New State for Checkout Info
   const navigate = useNavigate();
-  const location = useLocation(); 
+  const location = useLocation();
 
   useEffect(() => {
     fetch('https://fakestoreapi.com/carts/user/2')
@@ -81,7 +82,19 @@ export const AppStateProvider = ({ children }) => {
   };
 
   return (
-    <AppStateContext.Provider value={{ cart, addToCart, removeFromCart, decreaseQuantity, isLoggedIn, setIsLoggedIn, logout, alert, setAlert }}>
+    <AppStateContext.Provider value={{ 
+        cart, 
+        addToCart, 
+        removeFromCart, 
+        decreaseQuantity, 
+        isLoggedIn, 
+        setIsLoggedIn, 
+        logout, 
+        alert, 
+        setAlert,
+        checkoutInfo,   // Providing checkoutInfo to Context Consumers
+        setCheckoutInfo // Providing setCheckoutInfo to Context Consumers
+    }}>
       {children}
     </AppStateContext.Provider>
   );
