@@ -7,7 +7,7 @@ export const AppStateProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [alert, setAlert] = useState(null);
-  const [checkoutInfo, setCheckoutInfo] = useState(null); // New State for Checkout Info
+  const [checkoutInfo, setCheckoutInfo] = useState(null);
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -92,8 +92,8 @@ export const AppStateProvider = ({ children }) => {
         logout, 
         alert, 
         setAlert,
-        checkoutInfo,   // Providing checkoutInfo to Context Consumers
-        setCheckoutInfo // Providing setCheckoutInfo to Context Consumers
+        checkoutInfo,
+        setCheckoutInfo
     }}>
       {children}
     </AppStateContext.Provider>
