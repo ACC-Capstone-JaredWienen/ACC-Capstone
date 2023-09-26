@@ -9,7 +9,7 @@ const ProductCard = ({ product }) => {
         <div>
             <h2><Link to={`/products/${product.id}`}>{product.title}</Link></h2>
             <img src={product.image} alt={product.title} />
-            <p>{product.description}</p>
+            {/* <p>{product.description}</p> */}  {/* Commented out or remove this line */}
             <p>${product.price}</p>
             <button onClick={() => addToCart(product.id)}>Add to Cart</button>
         </div>

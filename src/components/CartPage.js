@@ -8,14 +8,25 @@ const CartPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    Promise.all(cart.map(item => fetch(`https://fakestoreapi.com/products/${item.productId}`)
-      .then(res => res.json())
-    )).then(products => setProductsDetails(products));
+    if (cart.length > 0) {
+      Promise.all(cart.map(item => fetch(`https://fakestoreapi.com/products/${item.productId}`)
+        .then(res => res.json())
+      )).then(products => setProductsDetails(products));
+    }
   }, [cart]);
 
   const handleCheckout = () => {
-    // Updated to navigate to CheckoutPage instead of InvoicePage
-    navigate('/checkout'); // Redirect to the CheckoutPage when Checkout button is clicked
+    navigate('/checkout');
+  };
+
+  const getTotalAmount = () => {
+    return cart.reduce((acc, currentItem) => {
+      const product = productsDetails.find(p => p.id === currentItem.productId);
+      if (product) {
+        return acc + (product.price * currentItem.quantity);
+      }
+      return acc;
+    }, 0);
   };
 
   return (
@@ -26,7 +37,11 @@ const CartPage = () => {
           const product = productsDetails.find(p => p.id === item.productId);
           return (
             <li key={item.productId}>
-              {product ? product.title : 'Loading...'} - Quantity: {item.quantity}
+              {product ? (
+                <>
+                  {product.title} - ${product.price.toFixed(2)} each - Quantity: {item.quantity}
+                </>
+              ) : 'Loading...'}
               <button onClick={() => addToCart(item.productId)}>+</button>
               <button onClick={() => decreaseQuantity(item.productId)}>-</button>
               <button onClick={() => removeFromCart(item.productId)}>Remove</button>
@@ -34,7 +49,13 @@ const CartPage = () => {
           );
         })}
       </ul>
-      {cart.length > 0 && <button onClick={handleCheckout}>Checkout</button>}
+      {cart.length > 0 && (
+        <>
+          <p>Total Amount: ${getTotalAmount().toFixed(2)}</p>
+          <button onClick={handleCheckout}>Checkout</button>
+        </>
+      )}
+      {cart.length === 0 && <p>Your cart is empty. Add some products to proceed.</p>}
     </div>
   );
 };

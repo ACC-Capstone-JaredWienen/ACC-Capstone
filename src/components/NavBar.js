@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react'; 
 import { Link } from 'react-router-dom';
 import { useAppState } from './AppStateContext';
 
@@ -6,19 +6,34 @@ const NavBar = ({ handleLogin, handleSignup, handleLogout }) => {
     const { isLoggedIn } = useAppState();
     const [dropdownOpen, setDropdownOpen] = useState(false);
 
+    const dropdownRef = useRef(null);
+
+    useEffect(() => {
+        const handleClickOutside = (event) => {
+            if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
+                setDropdownOpen(false);
+            }
+        };
+
+        document.addEventListener('mousedown', handleClickOutside);
+        return () => {
+            document.removeEventListener('mousedown', handleClickOutside);
+        };
+    }, []);
+
     return (
         <>
             <nav style={{ display: 'flex', justifyContent: 'space-between', padding: '10px', background: '#f4f4f4' }}>
-                <div onMouseOver={() => setDropdownOpen(true)} onMouseLeave={() => setDropdownOpen(false)}>
-                    <button className="menu-button">Menu</button>
+                <div ref={dropdownRef}>
+                    <button className="menu-button" onClick={() => setDropdownOpen(!dropdownOpen)}>Menu</button>
                     {dropdownOpen && (
                         <div className="dropdown">
-                            <Link to="/">Home</Link>
-                            <Link to="/products">All Products</Link>
-                            <Link to="/products?category=electronics">Electronics</Link>
-                            <Link to="/products?category=jewelery">Jewelry</Link>
-                            <Link to="/products?category=mens-clothing">Men's Clothing</Link>
-                            <Link to="/products?category=womens-clothing">Women's Clothing</Link>
+                            <Link to="/" onClick={() => setDropdownOpen(false)}>Home</Link>
+                            <Link to="/products" onClick={() => setDropdownOpen(false)}>All Products</Link>
+                            <Link to="/products?category=electronics" onClick={() => setDropdownOpen(false)}>Electronics</Link>
+                            <Link to="/products?category=jewelery" onClick={() => setDropdownOpen(false)}>Jewelry</Link>
+                            <Link to="/products?category=mens-clothing" onClick={() => setDropdownOpen(false)}>Men's Clothing</Link>
+                            <Link to="/products?category=womens-clothing" onClick={() => setDropdownOpen(false)}>Women's Clothing</Link>
                         </div>
                     )}
                 </div>

@@ -59,7 +59,7 @@ const ProductsPage = () => {
     return (
         <div>
             <h1>{category ? `${category.charAt(0).toUpperCase() + category.slice(1)} Products` : 'All Products'}</h1>
-
+            
             <div>
                 <label>
                     Category: 
@@ -81,17 +81,19 @@ const ProductsPage = () => {
                     Max Price:
                     <input type="number" value={maxPrice} onChange={(e) => setMaxPrice(e.target.value)} />
                 </label>
+
+                <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
+                    <option value="">Sort by price...</option>
+                    <option value="low-to-high">Low to High</option>
+                    <option value="high-to-low">High to Low</option>
+                </select>
             </div>
 
-            <select value={sortOrder} onChange={(e) => setSortOrder(e.target.value)}>
-                <option value="">Sort by price...</option>
-                <option value="low-to-high">Low to High</option>
-                <option value="high-to-low">High to Low</option>
-            </select>
-
-            <div>
+            <div className="product-grid">
                 {products.map(product => (
-                    <ProductCard product={product} key={product.id} />
+                    <div className="product-card" key={product.id}>
+                        <ProductCard product={product} />
+                    </div>
                 ))}
             </div>
         </div>

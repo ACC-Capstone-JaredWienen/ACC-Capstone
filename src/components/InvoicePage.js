@@ -2,11 +2,15 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { useAppState } from './AppStateContext';
 
+function generateRandomInvoiceId() {
+  return Math.floor(100000000 + Math.random() * 900000000);
+}
+
 function InvoicePage() {
-  const { invoiceId } = useParams();
   const { cart, checkoutInfo } = useAppState();
   const [productsDetails, setProductsDetails] = useState([]);
   const [error, setError] = useState(null);
+  const [generatedInvoiceId, setGeneratedInvoiceId] = useState(generateRandomInvoiceId());
 
   useEffect(() => {
     // Check if cart and checkout info are valid
@@ -39,7 +43,7 @@ function InvoicePage() {
 
   return (
     <div>
-      <div>Invoice ID: {invoiceId}</div>
+      <div>Invoice ID: {generatedInvoiceId}</div>
       <div>Email: {checkoutInfo.email}</div>
       <div>Shipping Address: {checkoutInfo.shippingStreet}, {checkoutInfo.shippingCity}, {checkoutInfo.shippingState}, {checkoutInfo.shippingZip}</div>
       <div>

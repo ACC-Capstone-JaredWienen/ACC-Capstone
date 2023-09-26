@@ -1,15 +1,17 @@
 /* Global Settings */
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #f4f4f4;
+  background-color: #fff;
   margin: 0;
   padding: 0;
-  color: #333;
+  color: #000;
+  text-align: center; /* Center everything */
 }
 
 h1, h2, h3 {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Arial', sans-serif;
   margin-bottom: 15px;
+  color: #000;
 }
 
 /* Product Grid */
@@ -18,35 +20,24 @@ h1, h2, h3 {
   grid-template-columns: repeat(3, 1fr);
   gap: 20px;
   justify-content: center;
-  align-items: center;
   margin-top: 20px;
-  border: 2px solid #F7FE2E;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
 }
 
 .product-card {
-  border: 2px solid #F7FE2E;
   padding: 10px;
-  background-color: #000000;
-  transition: background-color 0.3s ease, transform 0.3s ease;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  background-color: #f8f8f8;
+  transition: box-shadow 0.3s ease;
   border-radius: 10px;
-  box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
+  box-shadow: 0px 0px 5px rgba(0,0,0,0.1);
 }
 
 .product-card:hover {
-  background-color: #585858;
-  transform: scale(1.03);
+  box-shadow: 0px 0px 15px rgba(0,0,0,0.15);
 }
 
 .product-card img {
   max-width: 70%;
-  border: 2px solid #58FAF4;
+  border-radius: 5px;
   transition: transform 0.3s ease;
 }
 
@@ -55,78 +46,64 @@ h1, h2, h3 {
 }
 
 .product-card p {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Arial', sans-serif;
   margin-top: 10px;
-  color: #58FAF4;
+  color: #777;
   width: 90%;
-  font-size: 0.8em;
 }
 
 /* NavBar Styles */
 nav {
-  background-color: #000000;
-  border-bottom: 3px solid #F7FE2E;
+  background-color: #f8f8f8;
   padding: 0 20px;
   position: relative;
+  border-bottom: 1px solid #e7e7e7;
 }
 
 nav a, nav button {
-  font-family: 'Press Start 2P', cursive;
-  color: #58FAF4;
-  border: 2px solid transparent;
+  font-family: 'Arial', sans-serif;
+  color: #777;
   padding: 5px;
-  transition: background-color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 nav a:hover, nav button:hover {
-  background-color: #585858;
-  border: 2px solid #F7FE2E;
+  color: #000;
 }
 
 .dropdown {
   position: absolute;
-  top: 100%;
+  top: calc(100% + 4px);
   left: 0;
-  background-color: #000000;
-  border: 1px solid #F7FE2E;
+  background-color: #f8f8f8;
+  border: 1px solid #e7e7e7;
   z-index: 1000;
   display: flex;
   flex-direction: column;
   gap: 10px;
-  padding: 10px;
+  padding: 5px 10px;
   border-radius: 10px;
-  transition: opacity 0.3s ease;
-  opacity: 0;
-  visibility: hidden;
-}
-
-.menu-button:hover + .dropdown, 
-.dropdown:hover {
-  opacity: 1;
-  visibility: visible;
 }
 
 .menu-button {
-  background-color: #000000;
-  font-family: 'Press Start 2P', cursive;
-  color: #58FAF4;
-  border: 2px solid transparent;
+  background-color: transparent;
+  font-family: 'Arial', sans-serif;
+  color: #777;
+  border: none;
   padding: 5px;
-  transition: background-color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .menu-button:hover {
-  background-color: #585858;
-  border: 2px solid #F7FE2E;
+  color: #000;
 }
 
 .persistent-cart {
   position: fixed;
   bottom: 10px;
   right: 10px;
-  background-color: #000000;
+  background-color: #f8f8f8;
   padding: 10px;
-  border: 2px solid #F7FE2E;
   z-index: 2000;
   border-radius: 50%;
   width: 50px;
@@ -138,19 +115,18 @@ nav a:hover, nav button:hover {
 }
 
 .persistent-cart a {
-  color: #58FAF4;
+  color: #777;
   text-decoration: none;
 }
 
 .persistent-cart a:hover {
-  background-color: #585858;
+  color: #000;
 }
 
 /* Login, Signup, Profile Pages */
 .form-container {
-  background-color: #000000;
+  background-color: #f8f8f8;
   padding: 20px;
-  border: 2px solid #F7FE2E;
   border-radius: 10px;
   box-shadow: 0px 0px 15px rgba(0,0,0,0.1);
   max-width: 400px;
@@ -161,30 +137,28 @@ input[type="text"], input[type="password"], input[type="email"], textarea, butto
   width: 100%;
   padding: 10px;
   margin-bottom: 10px;
-  font-family: 'Press Start 2P', cursive;
-  background-color: #585858;
-  border: none;
-  color: #F7FE2E;
+  font-family: 'Arial', sans-serif;
+  background-color: #f2f2f2;
+  border: 1px solid #e7e7e7;
+  color: #777;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
+  transition: border-color 0.3s ease;
 }
 
 input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, textarea:focus {
-  outline: none;
-  background-color: #F7FE2E;
-  color: #000000;
+  border-color: #000;
 }
 
 button {
-  font-family: 'Press Start 2P', cursive;
+  font-family: 'Arial', sans-serif;
   cursor: pointer;
-  background-color: #58FAF4;
-  color: #000000;
+  background-color: #000;
+  color: #fff;
   transition: background-color 0.3s ease, transform 0.3s ease;
 }
 
 button:hover {
-  background-color: #F7FE2E;
+  background-color: #444;
   transform: scale(1.05);
 }
 
