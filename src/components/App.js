@@ -23,12 +23,37 @@ function AlertPopup() {
   return alert ? <div style={{ position: 'fixed', top: 0, right: 0, background: 'red', color: 'white', padding: '10px' }}>{alert}</div> : null;
 }
 
-function App() {
+function LoginLogic() {
+  const { setIsLoggedIn } = useAppState();
+
   useEffect(() => {
     netlifyIdentity.init({});
-    netlifyIdentity.on('signup', user => alert('Registration successful!'));
-  }, []);
 
+    netlifyIdentity.on('login', () => {
+      setIsLoggedIn(true);
+      netlifyIdentity.close();
+    });
+
+    netlifyIdentity.on('logout', () => {
+      setIsLoggedIn(false);
+    });
+
+    netlifyIdentity.on('signup', user => {
+      alert('Registration successful!');
+      setIsLoggedIn(true);
+    });
+
+    return () => {
+      netlifyIdentity.off('login');
+      netlifyIdentity.off('logout');
+      netlifyIdentity.off('signup');
+    };
+  }, [setIsLoggedIn]);
+
+  return null;  // This component doesn't render anything, it's just for logic
+}
+
+function App() {
   const handleLogin = () => netlifyIdentity.open('login');
   const handleSignup = () => netlifyIdentity.open('signup');
   const handleLogout = () => netlifyIdentity.logout();
@@ -36,6 +61,7 @@ function App() {
   return (
     <Router>
       <AppStateProvider>
+        <LoginLogic />
         <NavBar handleLogin={handleLogin} handleSignup={handleSignup} handleLogout={handleLogout} />
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -45,7 +71,7 @@ function App() {
           <Route path="/checkout" element={<CheckoutForm />} />
           <Route path="/login" element={<UserLoginPage />} />
           <Route path="/profile" element={<UserProfilePage />} />
-          <Route path="/invoice/:invoiceId" element={<InvoicePage />} /> {/* Updated Route */}
+          <Route path="/invoice/:invoiceId" element={<InvoicePage />} />
         </Routes>
         <AlertPopup />
       </AppStateProvider>
